@@ -1,0 +1,58 @@
+<div class="bar-dark bar bar-header disable-user-behavior" align-title="center">
+  <div class="title title-center header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px); left: 65px; right: 65px;">Donate to Event</div>
+</div>
+<div class="ion-view">
+<div title="Donate to Event">
+  <div padding="true" scroll="true" class="has-header">
+    <balance [balance]="balance"></balance>
+    <form [formGroup]="donateForm" (submit)="onFormSubmit()">
+      <label class="item item-input item-floating-label" item-floating-label [ngClass]="{invalid: amountError != null}">
+        <span class="input-label">£ Donation Amount  <i>{{amountError}}</i></span>
+        <input type="number" placeholder="£ Donation Amount" formControlName="amount" required/>
+      </label>
+      <label class="item item-input item-floating-label" item-floating-label [ngClass]="{invalid: eventNumError != null}">
+        <span class="input-label">Event Number <i>{{eventNumError}}</i></span>
+        <input type="tel" placeholder="Event Number (min 4 digits)" formControlName="eventId" />
+      </label>
+      <label class="item item-input item-floating-label" item-floating-label [ngClass]="{invalid: (!donateForm.get('message').valid) && donateForm.get('message').dirty}">
+        <span class="input-label">Message  <i>({{messageRemainingCount}}/40) {{messageError}}</i></span>
+        <input type="text" placeholder="Message (optional)" formControlName="message"/>
+      </label>
+      <div class="spacer" style="width: 285px; height: 20px;"></div>
+      <div class="item item-toggle toggle-large ng-valid" id="anon-toggle" toggle-class="toggle-positive"  style="">
+        <div ng-transclude="">
+          <span>Donate Anonymously</span>
+        </div>
+        <label class="toggle toggle-positive disable-user-behavior">
+          <input type="checkbox" formControlName="anonymous" class="ng-untouched ng-valid ng-dirty ng-valid-parse" style="" value="on">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="spacer" style="width: 285px; height: 9px;"></div>
+      <button type="submit" class="button button-positive button-block" [disabled]="!donateForm.valid">Donate</button>
+    </form>
+  </div>
+</div>
+  </div>
+<app-loading *ngIf="isLoading"></app-loading>
+<app-confirm-popup #confirmPopup (confirm)="onConfirmSubmit($event)">
+  <div class="popup-head">
+    <h3 class="popup-title ng-binding" ng-bind-html="title">Confirm Donation of £{{donateForm.get('amount').value}}</h3>
+  </div>
+  <div class="popup-body">
+    Fundraiser: {{event?.OrganiserFirstName}} {{event?.OrganiserLastName}}<br>
+    Event Number: {{event?.EventId}}<br>
+    Event Date:  {{event?.EventDate | date:'dd/MM/yyyy'}}<br>
+    Description: {{event?.Description}}
+  </div>
+</app-confirm-popup>
+<app-error-popup #errorPopup>
+  <div class="popup-head">
+    <h3 class="popup-title ng-binding" ng-bind-html="title">{{error}}</h3>
+  </div>
+  <div class="popup-body">
+    {{errorResolution}}
+  </div>
+</app-error-popup>

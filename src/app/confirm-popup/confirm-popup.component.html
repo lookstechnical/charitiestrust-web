@@ -1,0 +1,12 @@
+<div bsModal #confirmPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="popup-container popup-showing">
+    <div class="popup">
+      <ng-content></ng-content>
+      <div class="popup-buttons">
+        <button class="button" (click)="confirmPopup.hide()">Cancel</button>
+        <button class="button button-positive" (click)="onConfirm()">Confirm</button>
+
+      </div>
+    </div>
+  </div>
+</div>

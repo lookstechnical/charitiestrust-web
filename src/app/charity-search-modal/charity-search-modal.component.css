@@ -1,0 +1,25 @@
+.modal-content {
+  border-radius: 0px;
+}
+
+.modal-title {
+  text-align: center;
+}
+
+#charity-search-modal {
+  width: 90vw;
+  height: 90vh;
+}
+
+.col {
+  padding:15px;
+}
+
+.item {
+  cursor: pointer;
+}
+
+.item:hover {
+  border-color: #ccc;
+  background-color: #D9D9D9;
+}

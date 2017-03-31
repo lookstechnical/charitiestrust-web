@@ -1,0 +1,10 @@
+<div bsModal #errorPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="popup-container popup-showing">
+    <div class="popup">
+      <ng-content></ng-content>
+      <div class="popup-buttons">
+        <button class="button button-positive" (click)="errorPopup.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

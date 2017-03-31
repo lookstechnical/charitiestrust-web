@@ -1,0 +1,59 @@
+<div class="bar-dark bar bar-header disable-user-behavior" align-title="center">
+  <div class="title title-center header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px); left: 65px; right: 65px;">Donate to Charity</div>
+</div>
+<div class="ion-view">
+  <div class="has-header ion-content">
+    <balance [balance]="balance"></balance>
+    <form [formGroup]="donateForm" (submit)="onFormSubmit()">
+      <label class="item item-input item-floating-label" item-floating-label [ngClass]="{invalid: 'amountError != null'}">
+        <span class="input-label">£ Donation Amount  <i>{{amountError}}</i></span>
+        <input  type="number" placeholder="£ Donation Amount" (change)="checkDonationAmount($event)" formControlName="amount" />
+      </label>
+      <div class="list">
+        <form ng-submit="$event.preventDefault();">
+        <div class="item item-input-inset ">
+          <label id="search-label" class="item-input-wrapper item-floating-label" item-floating-label>
+            <span id="search-label-text" class="input-label">Search for Charity</span>
+            <input  id="search-field" type="search" placeholder="Search for Charity" [(ngModel)]="charityName" [ngModelOptions]="{standalone: true}" (change)="clearCharity()" required>
+          </label>
+          <button type="submit" id="searchButton" class="button icon ion-search positive" [disabled]="!charityName" (click)="searchForCharities(charityName)">
+          </button>
+        </div>
+        </form>
+      </div>
+      <label class="item item-select" name="Frequency">
+        <span class="input-label">Frequency</span>
+        <select formControlName="frequency">
+          <option value="0">One-off</option>
+          <option value="1">Every Month</option>
+          <option value="2">Every 2 Months</option>
+          <option value="3">Every 3 Months</option>
+          <option value="6">Every 6 Months</option>
+          <option value="12">Every 12 Months</option>
+        </select>
+      </label>
+      <div class="spacer" style="width: 285px; height: 9px;"></div>
+      <button type="submit" class="button button-positive button-block button-stay-at-bottom" [disabled]="!donateForm.valid">Donate</button>
+    </form>
+  </div>
+</div>
+<charity-search-modal #charitiesModalWrapper (charitySelected)="onCharitySelected($event)"></charity-search-modal>
+<app-loading *ngIf="isLoading"></app-loading>
+<app-confirm-popup #confirmPopup (confirm)="onConfirmSubmit($event)">
+  <div class="popup-head">
+    <h3 class="popup-title ng-binding" ng-bind-html="title">Confirm Donation of £{{donateForm.get('amount').value}}</h3>
+  </div>
+  <div class="popup-body">
+    Charity Name: {{donateForm.get('charityName').value}}<br>
+    Commission Number: {{donateForm.get('charityRef').value}}<br>
+    Donation Frequency: {{frequencyString}}
+  </div>
+</app-confirm-popup>
+<app-error-popup #errorPopup>
+  <div class="popup-head">
+    <h3 class="popup-title ng-binding" ng-bind-html="title">{{error}}</h3>
+  </div>
+  <div class="popup-body">
+    {{errorResolution}}
+  </div>
+</app-error-popup>
