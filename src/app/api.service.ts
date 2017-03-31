@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class ApiService {
 
-  api: string = "http://webapi.charitiestrust.org"
+  api: string = "https://webapi.charitiestrust.org"
 
   token: string = '';
   accountBalance: number = 0;
